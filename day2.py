@@ -1,23 +1,37 @@
+#!/usr/bin/python
 import cv2
+import matplotlib
 import numpy as np
+from matplotlib import pyplot as plt
+from numpy import ndarray as ndarray
+from cv2 import VideoCapture as cv2VCap
 
-# cap = cv2.VideoCapture(0)
-# while(True):
-#     ret, frame = cap.read()
-#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-#     cv2.imshow("gray", gray)
-#     if cv2.waitKey(1) & 0xFF == ord('q'):
-#         break
-# cap.release()
-# cv2.destroyAllWindows()
 
-conycry = cv2.imread('conycry.png', cv2.IMREAD_COLOR)
-# Draw Some Line
-# cv2.line(conycry, (0, 0), (150, 150), (255, 150, 255), 10)
-# cv2.rectangle(conycry, (30, 50), (200, 250), (0, 0, 255), 10)
-# cv2.imshow('conycry', conycry)
-# cv2.rectangle(conycry, (30, 10), (200, 250), (0, 0, 255), 2)
-# cv2.circle(conycry, (121, 135), 70, (0, 255, 0), 2)
-cv2.imshow('conycry', conycry)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+class VideoCapture(object):
+    __version__ = "0.0.1a"
+    __author__ = "Lim Chang Siang"
+
+    def __init__(self, arg1):
+        self.cap = self.get_camera(arg1)
+        while 1:
+            ret, frame = self.cap.read()
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            print(type(gray))
+            cv2.imshow('frame', gray)
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
+
+        self.cap.release()
+        cv2.destroyAllWindows()
+
+    @staticmethod
+    def get_camera(index):
+        return cv2.VideoCapture(index)
+
+
+def main():
+    VideoCapture(0)
+
+
+if __name__ == "__main__":
+    main()
